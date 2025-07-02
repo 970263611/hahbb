@@ -1,0 +1,55 @@
+spring:
+  application:
+    name: grlc
+  datasource:
+    - group: dev
+      datasource:
+      - name: dev-1
+        driverClassName: org.postgresql.Driver
+        url: jdbc:postgresql://localhost:5432/postgres
+        username: postgres
+        password: 123456
+        maxActive: 20
+        initialSize: 5
+        maxWait: 6000
+        minIdle: 5
+    - group: sit
+      datasource:
+        - name: sit-1
+          driverClassName: org.postgresql.Driver
+          url: jdbc:postgresql://localhost:5432/postgres
+          username: postgres
+          password: 123456
+          maxActive: 20
+          initialSize: 5
+          maxWait: 6000
+          minIdle: 5
+        - name: sit-2
+          driverClassName: org.postgresql.Driver
+          url: jdbc:postgresql://localhost:5432/postgres
+          username: postgres
+          password: 123456
+          maxActive: 20
+          initialSize: 5
+          maxWait: 6000
+          minIdle: 5
+    - group: pro
+      datasource:
+        - name: pro-1
+          driverClassName: org.postgresql.Driver
+          url: jdbc:postgresql://localhost:5432/postgres
+          username: postgres
+          password: 123456
+          maxActive: 20
+          initialSize: 5
+          maxWait: 6000
+          minIdle: 5
+        - name: pro-2
+          driverClassName: org.postgresql.Driver
+          url: jdbc:postgresql://localhost:5432/postgres
+          username: postgres
+          password: 123456
+          maxActive: 20
+          initialSize: 5
+          maxWait: 6000
+          minIdle: 5
