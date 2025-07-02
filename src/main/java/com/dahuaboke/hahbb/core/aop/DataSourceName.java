@@ -1,4 +1,4 @@
-package com.dahuaboke.grlc.core.aop;
+package com.dahuaboke.hahbb.core.aop;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -7,7 +7,7 @@ import java.lang.annotation.Target;
 
 @Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface DataSourceGroup {
+public @interface DataSourceName {
 
     String value();
 }

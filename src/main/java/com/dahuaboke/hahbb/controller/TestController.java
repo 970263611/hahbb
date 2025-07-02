@@ -1,6 +1,6 @@
-package com.dahuaboke.grlc.controller;
+package com.dahuaboke.hahbb.controller;
 
-import com.dahuaboke.grlc.service.TestService;
+import com.dahuaboke.hahbb.service.TestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;

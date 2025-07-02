@@ -1,4 +1,4 @@
-package com.dahuaboke.grlc.core.mybatis;
+package com.dahuaboke.hahbb.core.mybatis;
 
 import org.apache.ibatis.executor.Executor;
 import org.apache.ibatis.session.Configuration;

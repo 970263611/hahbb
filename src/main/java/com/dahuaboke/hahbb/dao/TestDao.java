@@ -1,7 +1,7 @@
-package com.dahuaboke.grlc.dao;
+package com.dahuaboke.hahbb.dao;
 
-import com.dahuaboke.grlc.core.aop.DataSourceGroup;
-import com.dahuaboke.grlc.core.aop.DataSourceName;
+import com.dahuaboke.hahbb.core.aop.DataSourceGroup;
+import com.dahuaboke.hahbb.core.aop.DataSourceName;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 

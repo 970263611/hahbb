@@ -1,7 +1,7 @@
-package com.dahuaboke.grlc.core.config;
+package com.dahuaboke.hahbb.core.config;
 
 import com.alibaba.druid.pool.DruidDataSource;
-import com.dahuaboke.grlc.core.mybatis.CustomSqlSessionFactoryBuilder;
+import com.dahuaboke.hahbb.core.mybatis.CustomSqlSessionFactoryBuilder;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.springframework.context.annotation.Bean;

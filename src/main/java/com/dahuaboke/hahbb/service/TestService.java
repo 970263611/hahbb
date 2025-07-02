@@ -1,6 +1,6 @@
-package com.dahuaboke.grlc.service;
+package com.dahuaboke.hahbb.service;
 
-import com.dahuaboke.grlc.dao.TestDao;
+import com.dahuaboke.hahbb.dao.TestDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

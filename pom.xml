@@ -6,13 +6,13 @@
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
 		<version>3.3.13</version>
-		<relativePath/> <!-- lookup parent from repository -->
+		<relativePath/>
 	</parent>
 	<groupId>com.dahuaboke</groupId>
-	<artifactId>grlc</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
-	<name>grlc</name>
-	<description>个人理财监控</description>
+	<artifactId>hahbb</artifactId>
+	<version>1.0.0</version>
+	<name>hahbb</name>
+	<description>多库查询简化</description>
 	<url/>
 	<licenses>
 		<license/>

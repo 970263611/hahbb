@@ -1,6 +1,6 @@
-package com.dahuaboke.grlc;
+package com.dahuaboke.hahbb;
 
-import com.dahuaboke.grlc.core.config.DataSourceProperties;
+import com.dahuaboke.hahbb.core.config.DataSourceProperties;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;

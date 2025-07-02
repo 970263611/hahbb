@@ -1,6 +1,6 @@
-package com.dahuaboke.grlc.core.aop;
+package com.dahuaboke.hahbb.core.aop;
 
-import com.dahuaboke.grlc.core.config.DynamicDataSource;
+import com.dahuaboke.hahbb.core.config.DynamicDataSource;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;

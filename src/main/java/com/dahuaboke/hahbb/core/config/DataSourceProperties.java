@@ -1,4 +1,4 @@
-package com.dahuaboke.grlc.core.config;
+package com.dahuaboke.hahbb.core.config;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 

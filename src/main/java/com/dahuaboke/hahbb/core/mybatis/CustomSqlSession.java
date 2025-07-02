@@ -1,6 +1,6 @@
-package com.dahuaboke.grlc.core.mybatis;
+package com.dahuaboke.hahbb.core.mybatis;
 
-import com.dahuaboke.grlc.core.config.DynamicDataSource;
+import com.dahuaboke.hahbb.core.config.DynamicDataSource;
 import org.apache.ibatis.cursor.Cursor;
 import org.apache.ibatis.exceptions.ExceptionFactory;
 import org.apache.ibatis.executor.ErrorContext;
