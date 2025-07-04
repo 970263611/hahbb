@@ -5,7 +5,6 @@ import org.apache.ibatis.cursor.Cursor;
 import org.apache.ibatis.exceptions.ExceptionFactory;
 import org.apache.ibatis.executor.ErrorContext;
 import org.apache.ibatis.executor.Executor;
-import org.apache.ibatis.mapping.MappedStatement;
 import org.apache.ibatis.reflection.ParamNameResolver;
 import org.apache.ibatis.session.Configuration;
 import org.apache.ibatis.session.RowBounds;
@@ -48,8 +47,6 @@ public class CustomSqlSession extends DefaultSqlSession {
     @Override
     public <E> List<E> selectList(String statement, Object parameter, RowBounds rowBounds) {
         try {
-            MappedStatement ms = configuration.getMappedStatement(statement);
-            dirty |= ms.isDirtySelect();
             boolean template = dataSource.isTemplate();
             if (template) {
                 return super.selectList(statement, parameter, rowBounds);
@@ -84,15 +81,24 @@ public class CustomSqlSession extends DefaultSqlSession {
     @Override
     public int update(String statement, Object parameter) {
         try {
-            dirty = true;
-            MappedStatement ms = configuration.getMappedStatement(statement);
-            List<DynamicDataSource.Key> keys = dataSource.getKeys(dataSource.getKey());
-            int updateSize = 0;
-            for (DynamicDataSource.Key key : keys) {
-                dataSource.setKey(key);
-                updateSize += executor.update(ms, wrapCollection(parameter));
+            boolean template = dataSource.isTemplate();
+            if (template) {
+                return super.update(statement, wrapCollection(parameter));
+            } else {
+                try {
+                    dataSource.setTemplate(true);
+                    List<DynamicDataSource.Key> keys = dataSource.getKeys(dataSource.getKey());
+                    int updateSize = 0;
+                    for (DynamicDataSource.Key key : keys) {
+                        dataSource.setKey(key);
+                        SqlSessionTemplate sqlSessionTemplate = dataSource.getSqlSessionTemplate(key);
+                        updateSize += sqlSessionTemplate.update(statement, parameter);
+                    }
+                    return updateSize;
+                } finally {
+                    dataSource.clearTemplate();
+                }
             }
-            return updateSize;
         } catch (Exception e) {
             throw ExceptionFactory.wrapException("Error updating database.  Cause: " + e, e);
         } finally {

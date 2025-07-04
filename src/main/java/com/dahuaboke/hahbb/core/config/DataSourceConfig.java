@@ -6,6 +6,8 @@ import com.dahuaboke.hahbb.core.mybatis.CustomSqlSessionFactoryBuilder;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.SqlSessionTemplate;
+import org.mybatis.spring.boot.autoconfigure.MybatisAutoConfiguration;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -18,6 +20,8 @@ import java.util.Map;
 @Configuration
 public class DataSourceConfig {
 
+    @Autowired
+    private MybatisAutoConfiguration mybatisAutoConfiguration;
     @Bean
     public DataSource dataSource(DataSourceProperties dataSourceProperties) throws Exception {
         DynamicDataSource dynamicDataSource = new DynamicDataSource();
@@ -56,15 +60,15 @@ public class DataSourceConfig {
     @Bean
     public SqlSessionFactory sqlSessionFactory(DataSource dataSource) throws Exception {
         if (dataSource instanceof DynamicDataSource) {
+            SqlSessionFactory mybatisSqlSessionFactory = mybatisAutoConfiguration.sqlSessionFactory(dataSource);
+            org.apache.ibatis.session.Configuration mybatisConfiguration = mybatisSqlSessionFactory.getConfiguration();
             SqlSessionFactoryBean sqlSessionFactoryBean = new SqlSessionFactoryBean();
+            sqlSessionFactoryBean.setConfiguration(mybatisConfiguration);
             sqlSessionFactoryBean.setDataSource(dataSource);
             sqlSessionFactoryBean.setSqlSessionFactoryBuilder(new CustomSqlSessionFactoryBuilder(dataSource));
             SqlSessionFactory sqlSessionFactory = sqlSessionFactoryBean.getObject();
-            org.apache.ibatis.session.Configuration configuration = sqlSessionFactory.getConfiguration();
             DynamicDataSource dynamicDataSource = (DynamicDataSource) dataSource;
             Map<DynamicDataSource.Key, SqlSessionTemplate> sessionTemplateMap = new HashMap<>();
-            SqlSessionFactoryBean bean = new SqlSessionFactoryBean();
-            bean.setConfiguration(configuration);
             Map<DynamicDataSource.Key, DruidDataSource> dataSources = dynamicDataSource.getDataSources();
             for (Map.Entry entry : dataSources.entrySet()) {
                 DynamicDataSource.Key dataSourceKey = (DynamicDataSource.Key) entry.getKey();

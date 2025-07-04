@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.dahuaboke.hahbb.dao.TestDao">
+    <select id="test2" resultType="string">
+        select name from public.user
+    </select>
+
+    <select id="test4" resultType="string">
+        select name from public.user
+    </select>
+
+    <insert id="test5">
+        insert into public.user values ('test5','5test')
+    </insert>
+</mapper>
