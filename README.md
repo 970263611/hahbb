@@ -10,10 +10,10 @@ spring:
   application:
     name: hahbb
   datasource:
-  	#多个同样类型库的抽象名称：组
+    #多个同样类型库的抽象名称：组
     - group: sit
       datasource:
-      	#组下具体某一个库的名称
+        #组下具体某一个库的名称
         - name: sit-1
           driverClassName: org.postgresql.Driver
           url: jdbc:postgresql://localhost:5432/postgres
