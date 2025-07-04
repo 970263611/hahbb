@@ -15,4 +15,8 @@
     <insert id="test5">
         insert into public.user values ('test5','5test')
     </insert>
+
+    <insert id="test7">
+        insert into public.user values ('test7','7test')
+    </insert>
 </mapper>

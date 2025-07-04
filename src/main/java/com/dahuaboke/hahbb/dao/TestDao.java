@@ -36,4 +36,12 @@ public interface TestDao {
     @DataSourceName("sit-1")
     @Insert("insert into public.user values ('test6','6test')")
     int test6();
+
+    @DataSourceGroup("sit")
+    int test7();
+
+    @DataSourceGroup("sit")
+    @DataSourceName("sit-1")
+    @Insert("insert into public.user values ('test8','8test')")
+    int test8();
 }
