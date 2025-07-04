@@ -16,7 +16,6 @@ public interface TestDao {
     String test1();
 
     @DataSourceGroup("sit")
-    @DataSourceName("sit-1")
     @Select("select name from public.user")
     List<String> test();
 }

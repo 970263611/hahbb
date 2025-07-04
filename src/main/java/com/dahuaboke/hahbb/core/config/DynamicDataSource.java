@@ -1,15 +1,18 @@
 package com.dahuaboke.hahbb.core.config;
 
+import com.alibaba.druid.pool.DruidDataSource;
+import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.jdbc.datasource.lookup.AbstractRoutingDataSource;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class DynamicDataSource extends AbstractRoutingDataSource {
 
     private ThreadLocal<Key> cache = new ThreadLocal<>();
-
+    private ThreadLocal<Boolean> isTemplate = new ThreadLocal<>();
+    private Map<Key, SqlSessionTemplate> sqlSessionTemplates;
     private List<Key> Keys = new ArrayList<>();
+    private Map<DynamicDataSource.Key, DruidDataSource> dataSources = new HashMap<>();
 
     @Override
     protected Object determineCurrentLookupKey() {
@@ -72,6 +75,35 @@ public class DynamicDataSource extends AbstractRoutingDataSource {
             }
         }
         return result;
+    }
+
+    public void setSqlSessionTemplates(Map<Key, SqlSessionTemplate> sqlSessionTemplates) {
+        this.sqlSessionTemplates = sqlSessionTemplates;
+    }
+
+    public SqlSessionTemplate getSqlSessionTemplate(Key key) {
+        return sqlSessionTemplates.get(key);
+    }
+
+    public void setTemplate(boolean template) {
+        isTemplate.set(template);
+    }
+
+    public boolean isTemplate() {
+        return isTemplate.get() == null ? false : isTemplate.get();
+    }
+
+    public void clearTemplate() {
+        isTemplate.remove();
+    }
+
+    public Map<DynamicDataSource.Key, DruidDataSource> getDataSources() {
+        return dataSources;
+    }
+
+    public void setDataSources(Map<DynamicDataSource.Key, DruidDataSource> dataSources) {
+        this.dataSources = dataSources;
+        setTargetDataSources(Collections.unmodifiableMap(dataSources));
     }
 
     public class Key {

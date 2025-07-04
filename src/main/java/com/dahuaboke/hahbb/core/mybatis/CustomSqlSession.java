@@ -10,6 +10,7 @@ import org.apache.ibatis.reflection.ParamNameResolver;
 import org.apache.ibatis.session.Configuration;
 import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.defaults.DefaultSqlSession;
+import org.mybatis.spring.SqlSessionTemplate;
 
 import javax.sql.DataSource;
 import java.io.IOException;
@@ -49,38 +50,24 @@ public class CustomSqlSession extends DefaultSqlSession {
         try {
             MappedStatement ms = configuration.getMappedStatement(statement);
             dirty |= ms.isDirtySelect();
-            List<DynamicDataSource.Key> keys = dataSource.getKeys(dataSource.getKey());
-
-//            List<E> result = new ArrayList<>();
-//            List<CompletableFuture<List<E>>> futures = new ArrayList<>();
-//            for (DynamicDataSource.Key key : keys) {
-//                CompletableFuture<List<E>> future = CompletableFuture.supplyAsync(() -> {
-//                    dataSource.setKey(key);
-//                    try {
-//                        return executor.query(ms, wrapCollection(parameter), rowBounds, Executor.NO_RESULT_HANDLER);
-//                    } catch (SQLException e) {
-//                        throw new RuntimeException(e);
-//                    }
-//                }, pool);
-//                futures.add(future);
-//            }
-//            CompletableFuture<Void> allFutures = CompletableFuture.allOf(
-//                    futures.toArray(new CompletableFuture[0])
-//            );
-//            CompletableFuture<List<E>> allResults = allFutures.thenApply(v ->
-//                    futures.stream()
-//                            .map(CompletableFuture::join)
-//                            .flatMap(List::stream)
-//                            .collect(Collectors.toList())
-//            );
-//            result.addAll(allResults.get());
-
-            List<E> result = new ArrayList<>();
-            for (DynamicDataSource.Key key : keys) {
-                dataSource.setKey(key);
-                result.addAll(executor.query(ms, wrapCollection(parameter), rowBounds, Executor.NO_RESULT_HANDLER));
+            boolean template = dataSource.isTemplate();
+            if (template) {
+                return super.selectList(statement, parameter, rowBounds);
+            } else {
+                try {
+                    dataSource.setTemplate(true);
+                    List<DynamicDataSource.Key> keys = dataSource.getKeys(dataSource.getKey());
+                    List<E> result = new ArrayList<>();
+                    for (DynamicDataSource.Key key : keys) {
+                        dataSource.setKey(key);
+                        SqlSessionTemplate sqlSessionTemplate = dataSource.getSqlSessionTemplate(key);
+                        result.addAll(sqlSessionTemplate.selectList(statement, parameter, rowBounds));
+                    }
+                    return result;
+                } finally {
+                    dataSource.clearTemplate();
+                }
             }
-            return result;
         } catch (Exception e) {
             throw ExceptionFactory.wrapException("Error querying database.  Cause: " + e, e);
         } finally {
